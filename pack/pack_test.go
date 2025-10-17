@@ -270,7 +270,7 @@ func BenchmarkVsZstd(b *testing.B) {
 
 			var packStage2OutputSize int
 			
-			b.Run("lp+zstd" + levelStr+e.Name(), func(b *testing.B) {
+			b.Run("lp" + levelStr + "zstd_"+e.Name(), func(b *testing.B) {
 				for i := 0; i < b.N; i++ {
 					// report MB/s
 					b.SetBytes(int64(packInputSize))

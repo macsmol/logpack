@@ -78,6 +78,28 @@ Here are results of compression of samples from loghub corpus [^2] . See [here](
 |    windows |     388.81 |          427.76 |       6.052
 |  zookeeper |     176.31 |          276.68 |      10.71
 
+### compression level: 6
+|   		 | pack[MB/s] |    unpack[MB/s] |  compr. ratio [input/output]
+|------------|------------|-----------------|--------------
+| android_v1 |      25.33 |          335.98 |     2.408 
+| android_v2 |      32.49 |          330.09 |     2.704 
+|     apache |     152.72 |          234.53 |    10.35 
+|blue_gene_l |     181.88 |          356.49 |     5.309 
+|     hadoop |      39.90 |          343.00 |     8.183 
+|    hdfs_v1 |      56.38 |          328.38 |     4.295 
+|    hdfs_v2 |     395.68 |          378.28 |     5.637 
+| health_app |      18.93 |          493.63 |     1.610 
+|        hpc |     236.71 |          224.24 |     7.626 
+|      linux |      77.64 |          235.67 |     6.275 
+|        mac |      40.67 |          336.59 |     3.343 
+| open_stack |      69.43 |          423.72 |     3.844 
+|  proxifier |      49.94 |          262.33 |     6.373 
+|      spark |     142.24 |          241.00 |     8.399 
+|        ssh |     179.40 |          257.39 |     9.039 
+|thunderbird |      52.03 |          256.46 |     5.479 
+|    windows |     226.41 |          421.41 |     6.164 
+|  zookeeper |     161.30 |          261.91 |    11.99 
+
 ### compression level: 9
 
 |  		     | pack[MB/s] |    unpack[MB/s] |  compr. ratio [input/output]
@@ -102,29 +124,56 @@ Here are results of compression of samples from loghub corpus [^2] . See [here](
 |  zookeeper |      19.79 |          254.07 |      12.69
 
 ### Compression improvement over ZSTD
-Compression ratios mean `input_size / output_size`.
+Compression ratios mean `input_size / output_size`. All speeds are in MB/s (1MB = 10^6 Bytes ).
 
-|             | zstd (ratio)|   lp(9)+zstd    |  improvement
-|-------------|-------------|-----------------|------------------
-|  android_v1 |   13.48     |       15.71     |        1.166         
-|  android_v2 |   13.87     |       17.47     |        1.259         
-|      apache |   21.95     |       30.93     |        1.409         
-| blue_gene_l |    9.170    |       17.63     |        1.923         
-|      hadoop |  178.8      |      211.3      |        1.182          
-|     hdfs_v1 |   12.57     |       16.05     |        1.277         
-|     hdfs_v2 |   19.13     |       24.88     |        1.300         
-|  health_app |   11.02     |       12.40     |        1.125         
-|         hpc |   12.29     |       22.47     |        1.828         
-|       linux |   13.13     |       19.28     |        1.469         
-|         mac |   20.11     |       25.63     |        1.275         
-|  open_stack |   12.27     |       15.43     |        1.257         
-|   proxifier |   15.97     |       18.65     |        1.168         
-|       spark |   16.65     |       25.19     |        1.512         
-|         ssh |   17.51     |       34.23     |        1.955         
-| thunderbird |   17.64     |       30.22     |        1.713         
-|     windows |   69.45     |      100.9      |        1.453         
-|   zookeeper |   25.94     |       46.81     |        1.805      
-|CORPUS_TOTAL |   16.14     |       22.95     |        1.422
+#### logpack level 4
+
+|             | zstd pack speed  | zstd compr ratio | lp(4)+zstd pack speed  | lp(4)+zstd compr ratio | compr improvement 
+|-------------|------------------|------------------|------------------------|------------------------|--------------------- 
+|  android_v1 |      265.62      |    13.48         |      62.90             |   15.98                | 1.185
+|  android_v2 |      270.41      |    13.87         |      73.84             |   17.69                | 1.275
+|      apache |      371.79      |    21.95         |     209.14             |   31.76                | 1.447
+| blue_gene_l |      232.00      |     9.170        |     212.71             |   17.50                | 1.908
+|      hadoop |     1739.27      |   178.8          |      83.79             |  165.0                 | 0.9228
+|     hdfs_v1 |      256.56      |    12.57         |     100.63             |   15.43                | 1.227
+|     hdfs_v2 |      309.94      |    19.13         |     282.10             |   24.39                | 1.275
+|  health_app |      245.36      |    11.02         |      54.24             |   12.63                | 1.146
+|         hpc |      278.24      |    12.29         |     223.81             |   22.94                | 1.867
+|       linux |      281.24      |    13.13         |     137.19             |   19.54                | 1.488
+|         mac |      320.29      |    20.11         |      91.78             |   26.28                | 1.307
+|  open_stack |      256.87      |    12.27         |     135.63             |   15.35                | 1.251
+|   proxifier |      296.26      |    15.97         |     100.79             |   18.26                | 1.143
+|       spark |      309.13      |    16.65         |     136.14             |   23.86                | 1.433
+|         ssh |      299.59      |    17.51         |     176.40             |   33.98                | 1.941
+| thunderbird |      314.19      |    17.64         |     118.56             |   31.39                | 1.780
+|     windows |      783.92      |    69.45         |     343.43             |  102.8                 | 1.480
+|   zookeeper |      364.88      |    25.94         |     171.24             |   45.50                | 1.754
+|CORPUS_TOTAL |       ----       |    16.14         |      ----              |   22.91                | 1.419 
+
+
+#### logpack level 9
+
+|             | zstd pack speed  | zstd compr ratio | lp(9)+zstd pack speed  | lp(9)+zstd compr ratio | compr improvement 
+|-------------|------------------|------------------|------------------------|------------------------|--------------------- 
+|  android_v1 |      265.62      |    13.48         |    17.85               |   15.71                | 1.166
+|  android_v2 |      270.41      |    13.87         |    19.58               |   17.47                | 1.259
+|      apache |      371.79      |    21.95         |    33.92               |   30.93                | 1.409
+| blue_gene_l |      232.00      |     9.170        |    21.68               |   17.63                | 1.923
+|      hadoop |     1739.27      |   178.8          |    34.56               |  211.3                 | 1.182
+|     hdfs_v1 |      256.56      |    12.57         |    20.00               |   16.05                | 1.277
+|     hdfs_v2 |      309.94      |    19.13         |    44.90               |   24.88                | 1.300
+|  health_app |      245.36      |    11.02         |    17.18               |   12.40                | 1.125
+|         hpc |      278.24      |    12.29         |    17.19               |   22.47                | 1.828
+|       linux |      281.24      |    13.13         |    18.29               |   19.28                | 1.469
+|         mac |      320.29      |    20.11         |    23.97               |   25.63                | 1.275
+|  open_stack |      256.87      |    12.27         |    40.80               |   15.43                | 1.257
+|   proxifier |      296.26      |    15.97         |    24.72               |   18.65                | 1.168
+|       spark |      309.13      |    16.65         |    21.09               |   25.19                | 1.512
+|         ssh |      299.59      |    17.51         |    21.57               |   34.23                | 1.955
+| thunderbird |      314.19      |    17.64         |    25.39               |   30.22                | 1.713
+|     windows |      783.92      |    69.45         |    74.65               |  100.9                 | 1.453
+|   zookeeper |      364.88      |    25.94         |    22.30               |   46.81                | 1.805
+|CORPUS_TOTAL |       ----       |    16.14         |      ----              |   22.95                | 1.422
 
 
 [^2]: The results are based on <=10 MB samples from [LogHub corpus] (https://github.com/logpai/loghub/tree/master).

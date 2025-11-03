@@ -1,6 +1,6 @@
 # logpack
 
-Logpack is specialized compressor for log files. While on it's own it provides modest compression it can be used in tandem with dictionary based compressor (gzip, zstd).
+Logpack is specialized compressor for log files. On its own it provides modest compression. It is best used in in two stage scheme: Use logpack first, then compress its output with a dictionary based compressor (gzip, zstd).
 For example it reaches compression ratios ~42% better than that of zstd alone (and will do it faster and using < 1 MB of RAM).
 
 It is based on the ideas presented in "_Fast and efficient log file compression_" paper by Przemysław Skibiński and Jakub Swacha.
